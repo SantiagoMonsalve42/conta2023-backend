@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\Santiago\source\repos\contabilidad\contabilidadAPI\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2023-11-20T01:04:35.1891496Z;False|2023-11-19T20:03:56.8355648-05:00;True|2023-11-04T18:27:45.3546985-05:00;True|2023-11-04T12:48:54.4208204-05:00;False|2023-11-04T12:48:26.5245674-05:00;False|2023-11-04T12:48:03.2536745-05:00;True|2023-11-04T12:28:06.7279682-05:00;True|2023-11-03T23:54:08.1375375-05:00;False|2023-11-03T23:52:48.3689812-05:00;False|2023-11-03T23:52:19.8864642-05:00;True|2023-11-03T23:30:25.7248663-05:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

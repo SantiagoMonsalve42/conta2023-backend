@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "7NNT497GjqFq9JYq7YNqmm5oc6wSkqTehQthjPU13sxnXQNE9//7DfBHZm7lwtjt0N+xadxWxBh8KTT1b++0ZA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Santiago\\source\\repos\\contabilidad\\DTO\\DTO.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Santiago\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\Santiago\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\Santiago\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

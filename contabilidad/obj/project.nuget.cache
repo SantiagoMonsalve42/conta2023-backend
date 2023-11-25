@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "IXYzQRbgPDBcAq4tmMcFgItrw1VbN0sLOe4d1Lj5qrRiCpR68XYE8kMU6++voLhRynqrf0O/HaSG/oRddaxEPQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Santiago\\source\\repos\\contabilidad\\contabilidad\\contabilidad.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Santiago\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512"
+  ],
+  "logs": []
+}
