@@ -11,7 +11,7 @@ namespace Bussines.Implementations
         {
             _logData = logData;
         }
-        public async Task<TblLog> crearAuditoria(string description,string ip,string user)
+        public async Task<TblLog> crearAuditoria(string description,string user,string ip)
         {
             return await _logData.Add(new TblLog
             {

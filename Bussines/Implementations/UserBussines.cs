@@ -23,11 +23,11 @@ namespace Bussines.Implementations
             _util = util;
         }
 
-        public async Task<SpGenericResult> Crear(CreateUserDTO request, string Ip,string User)
+        public async Task<SpGenericResult> Crear(CreateUserDTO request, string ip,string user)
         {
 
             SpGenericResult status=new SpGenericResult { Message= "Error",Status="1"};
-            TblLog idAudit = await _log.crearAuditoria("Creacion usuario", Ip,User);
+            TblLog idAudit = await _log.crearAuditoria("Creacion usuario", user, ip);
             try
             {
                 request.Password = StringUtil.GetSHA256(request.Password);
@@ -40,22 +40,22 @@ namespace Bussines.Implementations
             }
             return status;
         }
-        public async Task<LoginResponseDTO> Login(LoginDTO request, string Ip, string User)
+        public async Task<LoginResponseDTO> Login(LoginDTO request, string ip, string user)
         {
 
             SpGenericResult status = new SpGenericResult { Message = "Error", Status = "1" };
             LoginResponseDTO loginResponse= new LoginResponseDTO(null, false,null);
-            TblLog idAudit = await _log.crearAuditoria("Login usuario", Ip, User);
+            TblLog idAudit = await _log.crearAuditoria("Login usuario", user, ip);
             try
             {
                 request.Password = StringUtil.GetSHA256(request.Password);
                 status = _data.Login(request.Username,request.Password);
                 if(status.Status == "0")
                 {
-                    TblUser user = await _data.getByUserMail(request.Username);
-                    string token = _util.GenerateToken(user.Email, user.IdUser);
-                    user.LastToken = token;
-                    await _data.Update(user);
+                    TblUser user_exists= await _data.getByUserMail(request.Username);
+                    string token = _util.GenerateToken(user_exists.Email, user_exists.IdUser);
+                    user_exists.LastToken = token;
+                    await _data.Update(user_exists);
                     loginResponse = new LoginResponseDTO(token, true,status.Message);
                 }
                 else
@@ -71,18 +71,18 @@ namespace Bussines.Implementations
             return loginResponse;
         }
 
-        public async Task<LoginResponseDTO> UpdateToken(UpdateTokenDTO request, string Ip, string User)
+        public async Task<LoginResponseDTO> UpdateToken(UpdateTokenDTO request, string ip, string user)
         {
-            TblLog idAudit = await _log.crearAuditoria("Refresh token", Ip, User);
+            TblLog idAudit = await _log.crearAuditoria("Refresh token", user, ip);
             LoginResponseDTO loginResponse = new LoginResponseDTO(null, false, null);
             try
             {
-                TblUser user = await _data.getByUserMail(request.Username);
-                if(user.LastToken == request.Token)
+                TblUser user_exists = await _data.getByUserMail(request.Username);
+                if(user_exists.LastToken == request.Token)
                 {
-                    string token = _util.GenerateToken(user.Email, user.IdUser);
-                    user.LastToken = token;
-                    await _data.Update(user);
+                    string token = _util.GenerateToken(user_exists.Email, user_exists.IdUser);
+                    user_exists.LastToken = token;
+                    await _data.Update(user_exists);
                     loginResponse = new LoginResponseDTO(token, true, "OK");
                     await _log.exitoAuditoria((int)idAudit.IdLog, "Correcto: " + request.Username);
                 }
@@ -98,14 +98,14 @@ namespace Bussines.Implementations
             }
             return loginResponse;
         }
-        public async Task<DataTable> GetTotalByAccounts(string Ip, string User)
+        public async Task<DataTable> GetTotalByAccounts(string ip, string user)
         {
             DataTable response =null;
-            TblLog idAudit = await _log.crearAuditoria("Get total por cuentas usuario", Ip, User);
+            TblLog idAudit = await _log.crearAuditoria("Get total por cuentas usuario", user, ip);
             try
             {
-                response = _data.GetTotalByAccounts(User);
-                await _log.exitoAuditoria((int)idAudit.IdLog, "Correcto: " + User);
+                response = _data.GetTotalByAccounts(user);
+                await _log.exitoAuditoria((int)idAudit.IdLog, "Correcto: " + user);
             }
             catch (Exception ex)
             {
