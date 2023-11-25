@@ -17,7 +17,7 @@ namespace Bussines.Implementations
         }
         public async Task<ICollection<DocumentTypeDTO>> get(string ip, string usuario)
         {
-            var audit = await _audit.crearAuditoria("Consultar tipos de documento", ip, usuario);
+            var audit = await _audit.crearAuditoria("Consultar tipos de documento", usuario,ip);
             try
             {
                 var result = await _data.Get();

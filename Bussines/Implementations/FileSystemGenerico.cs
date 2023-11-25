@@ -1,24 +1,27 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Bussines.Interfaces;
+using Data.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
 namespace Bussines.implementations
 {
     public class FileSystemGenerico
     {
+        private ILogBussines _log;
         private IConfiguration _config;
-        public FileSystemGenerico()
-        {
-        }
-        public FileSystemGenerico(IConfiguration config)
+        
+        public FileSystemGenerico(IConfiguration config, ILogBussines logData)
         {
             _config = config;
-            this.basePath = _config["RutaDisco"]; 
+            this.basePath = _config["RutaDisco"];
+            _log = logData;
         }
 
         public string? basePath { get; set; }
 
-        public string subirArchivo(IFormFile archivo,string user)
+        public async Task<string> subirArchivo(IFormFile archivo,string user,string ip)
         {
+            var log = await _log.crearAuditoria("Subir archivo",user,ip);
             try
             {
                 var fullPath = "";
@@ -43,28 +46,31 @@ namespace Bussines.implementations
 
                     }
                 }
-
+                await _log.exitoAuditoria((int)log.IdLog, "OK");
                 return fullPath;
             }
             catch (Exception ex)
             {
+                await _log.falloAuditoria((int)log.IdLog,ex.Message);
                 return ex.Message;
             }
 
         }
-        public byte[] descargarArchivo(string fileName)
+        public async Task<byte[]> descargarArchivo(string fileName, string user, string ip)
         {
             byte[] fileBytes = null;
+            var log = await _log.crearAuditoria("Descragra archivo", user, ip);
             try
             {
                 if (basePath != null)
                 {
                     fileBytes = File.ReadAllBytes(Path.Combine(basePath, fileName));
                 }
+                await _log.exitoAuditoria((int)log.IdLog, "OK");
             }
             catch (Exception ex)
             {
-
+                await _log.falloAuditoria((int)log.IdLog, ex.Message);
             }
             return fileBytes;
         }

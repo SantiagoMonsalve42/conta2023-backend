@@ -19,7 +19,7 @@ namespace Bussines.implementations
 
         public async Task<ICollection<AccountTypeDTO>> get(string ip, string usuario)
         {
-            var audit = await _audit.crearAuditoria("Consultar tipos de cuenta",ip,usuario);
+            var audit = await _audit.crearAuditoria("Consultar tipos de cuenta",usuario,ip);
             try
             {
                 var result = await _data.Get();

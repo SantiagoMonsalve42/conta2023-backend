@@ -22,7 +22,7 @@ namespace Bussines.Implementations
         public async Task<bool> Update(UserAccountUpdateDTO request, string ip, string user)
         {
             bool status = false;
-            TblLog idLog = await _log.crearAuditoria("Actualizar cuenta para usuario", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Actualizar cuenta para usuario", user, ip);
             try
             {
                 TblUserAccount account = await _data.getById(request.IdAccount);
@@ -41,7 +41,7 @@ namespace Bussines.Implementations
         public async Task<bool> Create(UserAccountCreateDTO request, string ip, string user)
         {
             bool status = false;
-            TblLog idLog = await _log.crearAuditoria("Crear cuenta para usuario", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Crear cuenta para usuario", user, ip);
             try
             {
                 TblUser userExists = await _datauser.getByUserMail(user);
@@ -65,7 +65,7 @@ namespace Bussines.Implementations
         public async Task<bool> ChangeStatus(int id, string ip, string user)
         {
             bool status = false;
-            TblLog idLog = await _log.crearAuditoria("Cambiar estado cuenta para usuario", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Cambiar estado cuenta para usuario", user, ip);
             try
             {
                 TblUserAccount account = await _data.getById(id);
@@ -83,7 +83,7 @@ namespace Bussines.Implementations
         public async Task<UserAccountDTO> getById(int id, string ip, string user)
         {
             UserAccountDTO status = null;
-            TblLog idLog = await _log.crearAuditoria("Get cuenta by id", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Get cuenta by id", user, ip);
             try
             {
                 TblUserAccount account = await _data.getById(id);
@@ -99,7 +99,7 @@ namespace Bussines.Implementations
         public async Task<ICollection<UserAccountDTO>> getByUser(string ip, string user)
         {
             ICollection<UserAccountDTO> status = null;
-            TblLog idLog = await _log.crearAuditoria("Get cuenta by user ", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Get cuenta by user ", user, ip);
             try
             {
                 TblUser userExits = await _datauser.getByUserMail(user);

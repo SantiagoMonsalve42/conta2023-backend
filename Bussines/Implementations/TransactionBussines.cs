@@ -22,13 +22,13 @@ namespace Bussines.Implementations
         public async Task<bool> Create(TransactionCreateDTO request, string ip, string user)
         {
             bool status = false;
-            TblLog idLog = await _log.crearAuditoria("Crear transaccion", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Crear transaccion", user, ip);
             try
             {
                 var Ruta = "";
                 if(request.Adjunto != null)
                 {
-                    Ruta= _file.subirArchivo(request.Adjunto, user);
+                    Ruta= await _file.subirArchivo(request.Adjunto, user, ip);
                 }
                 TblTransaction dato= request.Clone<TransactionCreateDTO, TblTransaction>();
                 dato.UrlAttach = Ruta;
@@ -46,7 +46,7 @@ namespace Bussines.Implementations
         public async Task<bool> Delete(int id, string ip, string user)
         {
             bool status = false;
-            TblLog idLog = await _log.crearAuditoria("Eliminar transaccion", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Eliminar transaccion", user, ip);
             try
             {
                 await _data.Delete(id);
@@ -63,7 +63,7 @@ namespace Bussines.Implementations
         public async Task<ICollection<TransactionDTO>> getByAccount(int id,string ip, string user)
         {
             ICollection<TransactionDTO> status = null;
-            TblLog idLog = await _log.crearAuditoria("Get transaccion por cuenta id ", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Get transaccion por cuenta id ", user, ip);
             try
             {
                 ICollection<TblTransaction> account = await _data.getByAccount(id);
@@ -80,7 +80,7 @@ namespace Bussines.Implementations
         public async Task<TransactionDTO> getById(int id, string ip, string user)
         {
             TransactionDTO status = null;
-            TblLog idLog = await _log.crearAuditoria("Get transaccion por id", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Get transaccion por id", user, ip);
             try
             {
                 TblTransaction account = await _data.getById(id);
@@ -97,14 +97,14 @@ namespace Bussines.Implementations
         public async Task<bool> Update(TransactionUpdateDTO request, string ip, string user)
         {
             bool status = false;
-            TblLog idLog = await _log.crearAuditoria("Actualizar transaccion", ip, user);
+            TblLog idLog = await _log.crearAuditoria("Actualizar transaccion", user, ip);
             try
             {
                 TblTransaction account = await _data.getById(request.IdTransaction);
                 var Ruta = "";
                 if (request.Adjunto != null)
                 {
-                    Ruta = _file.subirArchivo(request.Adjunto, user);
+                    Ruta = await _file.subirArchivo(request.Adjunto, user,ip);
                     account.UrlAttach = Ruta;
                 }
                 account.Description = request.Description;
