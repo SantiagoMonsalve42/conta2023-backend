@@ -6,18 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Models;
 
-[Table("TBL_DOCUMENT_TYPE")]
-public partial class TblDocumentType
+[Table("TBL_ROL")]
+public partial class TblRol
 {
     [Key]
-    [Column("ID_DOCUMENT_TYPE")]
-    public int IdDocumentType { get; set; }
+    [Column("ID_ROL")]
+    public int IdRol { get; set; }
 
-    [Column("DOCUMENT_TYPE")]
+    [Column("DESCRIPTION")]
     [StringLength(100)]
     [Unicode(false)]
-    public string DocumentType { get; set; } = null!;
+    public string Description { get; set; } = null!;
 
-    [InverseProperty("IdDocumentTypeNavigation")]
+    [InverseProperty("IdRolNavigation")]
     public virtual ICollection<TblUser> TblUsers { get; set; } = new List<TblUser>();
 }

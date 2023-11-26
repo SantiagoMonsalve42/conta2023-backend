@@ -24,7 +24,7 @@ namespace Util
             for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
             return sb.ToString();
         }
-        public string GenerateToken(string email, long idPersona)
+        public string GenerateToken(string email, long idPersona,bool isAdmin)
         {
             var key = _config["JWT:Key"];
             var Issuer = _config["JWT:Issuer"];
@@ -36,6 +36,15 @@ namespace Util
                 new Claim("email",email),
                 new Claim("idPersona",idPersona.ToString()),
             };
+            if(isAdmin)
+            {
+                claims = new[]
+                {
+                    new Claim("email",email),
+                    new Claim("idPersona",idPersona.ToString()),
+                    new Claim("isAdmin","true")
+                };
+            }
             var token = new JwtSecurityToken(Issuer,
                 Audience,
                 claims,

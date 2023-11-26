@@ -53,7 +53,8 @@ namespace Bussines.Implementations
                 if(status.Status == "0")
                 {
                     TblUser user_exists= await _data.getByUserMail(request.Username);
-                    string token = _util.GenerateToken(user_exists.Email, user_exists.IdUser);
+                    bool is_admin = user_exists.IdRol == 1 ? true : false;
+                    string token = _util.GenerateToken(user_exists.Email, user_exists.IdUser,is_admin);
                     user_exists.LastToken = token;
                     await _data.Update(user_exists);
                     loginResponse = new LoginResponseDTO(token, true,status.Message);
@@ -80,7 +81,8 @@ namespace Bussines.Implementations
                 TblUser user_exists = await _data.getByUserMail(request.Username);
                 if(user_exists.LastToken == request.Token)
                 {
-                    string token = _util.GenerateToken(user_exists.Email, user_exists.IdUser);
+                    bool is_admin = user_exists.IdRol == 1 ? true : false;
+                    string token = _util.GenerateToken(user_exists.Email, user_exists.IdUser, is_admin);
                     user_exists.LastToken = token;
                     await _data.Update(user_exists);
                     loginResponse = new LoginResponseDTO(token, true, "OK");
