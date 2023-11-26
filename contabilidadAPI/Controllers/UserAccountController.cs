@@ -7,7 +7,6 @@ namespace contabilidadAPI.Controllers
     public class UserAccountController: BaseController
     {
         private readonly IUserAccountBussines _bussines;
-
         public UserAccountController(IUserAccountBussines bussines)
         {
             _bussines = bussines;
