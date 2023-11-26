@@ -65,6 +65,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
     };
 });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("isAdmin", policy => policy.RequireClaim("isAdmin"));
+});
 #endregion
 #region dependency injection
 builder.Services.AddScoped<SpDbContext>();
