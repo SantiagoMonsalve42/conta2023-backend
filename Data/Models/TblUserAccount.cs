@@ -14,7 +14,7 @@ public partial class TblUserAccount
     public int IdAccount { get; set; }
 
     [Column("ID_USER")]
-    public int? IdUser { get; set; }
+    public int IdUser { get; set; }
 
     [Column("ID_ACCOUNT_TYPE")]
     public int IdAccountType { get; set; }
@@ -38,5 +38,8 @@ public partial class TblUserAccount
 
     [ForeignKey("IdUser")]
     [InverseProperty("TblUserAccounts")]
-    public virtual TblUser? IdUserNavigation { get; set; }
+    public virtual TblUser IdUserNavigation { get; set; } = null!;
+
+    [InverseProperty("IdAccountNavigation")]
+    public virtual ICollection<TblTransaction> TblTransactions { get; set; } = new List<TblTransaction>();
 }

@@ -21,13 +21,15 @@ public partial class SpDbContext : DbContext
 
     public virtual DbSet<TblLog> TblLogs { get; set; }
 
+    public virtual DbSet<TblRol> TblRols { get; set; }
+
     public virtual DbSet<TblTransaction> TblTransactions { get; set; }
 
     public virtual DbSet<TblUser> TblUsers { get; set; }
 
     public virtual DbSet<TblUserAccount> TblUserAccounts { get; set; }
 
-   
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TblLog>(entity =>
@@ -35,9 +37,14 @@ public partial class SpDbContext : DbContext
             entity.Property(e => e.State).IsFixedLength();
         });
 
+        modelBuilder.Entity<TblRol>(entity =>
+        {
+            entity.Property(e => e.IdRol).ValueGeneratedNever();
+        });
+
         modelBuilder.Entity<TblTransaction>(entity =>
         {
-            entity.HasOne(d => d.IdAccountNavigation).WithMany()
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.TblTransactions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TBL_TRANSACTION_TBL_USER_ACCOUNT");
         });
@@ -47,6 +54,10 @@ public partial class SpDbContext : DbContext
             entity.HasOne(d => d.IdDocumentTypeNavigation).WithMany(p => p.TblUsers)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TBL_USER_TBL_DOCUMENT_TYPE");
+
+            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.TblUsers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TBL_USER_TBL_ROL");
         });
 
         modelBuilder.Entity<TblUserAccount>(entity =>
@@ -57,7 +68,9 @@ public partial class SpDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TBL_USER_ACCOUNT_TBL_ACCOUNT_TYPE");
 
-            entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.TblUserAccounts).HasConstraintName("FK_TBL_USER_ACCOUNT_TBL_USER");
+            entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.TblUserAccounts)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TBL_USER_ACCOUNT_TBL_USER");
         });
 
         OnModelCreatingPartial(modelBuilder);

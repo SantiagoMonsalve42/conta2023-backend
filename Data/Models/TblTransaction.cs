@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Models;
 
@@ -28,5 +30,6 @@ public partial class TblTransaction
     public double Value { get; set; }
 
     [ForeignKey("IdAccount")]
+    [InverseProperty("TblTransactions")]
     public virtual TblUserAccount IdAccountNavigation { get; set; } = null!;
 }

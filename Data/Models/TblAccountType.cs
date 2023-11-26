@@ -18,9 +18,8 @@ public partial class TblAccountType
     [Unicode(false)]
     public string AccountType { get; set; } = null!;
 
-    [Required]
     [Column("POSITIVE")]
-    public bool? Positive { get; set; }
+    public bool Positive { get; set; }
 
     [InverseProperty("IdAccountTypeNavigation")]
     public virtual ICollection<TblUserAccount> TblUserAccounts { get; set; } = new List<TblUserAccount>();

@@ -9,7 +9,6 @@ namespace Data.Models;
 [Table("TBL_LOG")]
 public partial class TblLog
 {
-
     [Key]
     [Column("ID_LOG")]
     public long IdLog { get; set; }
