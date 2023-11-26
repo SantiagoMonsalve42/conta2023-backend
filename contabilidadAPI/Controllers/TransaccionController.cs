@@ -7,12 +7,10 @@ namespace contabilidadAPI.Controllers
     public class TransaccionController : BaseController
     {
         private readonly ITransactionBussines _bussines;
-
         public TransaccionController(ITransactionBussines bussines)
         {
             _bussines = bussines;
         }
-
         [HttpPost]
         public async Task<ObjectResult> create([FromForm]TransactionCreateDTO request)
         {
