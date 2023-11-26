@@ -31,6 +31,7 @@ namespace Bussines.Implementations
                 await _data.Update(account);
                 status = true;
                 await _log.exitoAuditoria((int)idLog.IdLog, "Se actualizo la cuenta correctamente");
+
             }
             catch (Exception ex)
             {
