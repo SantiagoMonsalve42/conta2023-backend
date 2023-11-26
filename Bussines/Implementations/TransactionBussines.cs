@@ -13,6 +13,7 @@ namespace Bussines.Implementations
         private readonly ITransaccionData _data;
         private readonly ILogBussines _log;
         private readonly FileSystemGenerico _file;
+
         public TransactionBussines(ITransaccionData data, ILogBussines log,FileSystemGenerico file)
         {
             _data = data;
